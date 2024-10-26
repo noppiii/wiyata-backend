@@ -1,0 +1,49 @@
+spring:
+  profiles:
+    active: dev
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wiyata
+    username: postgres
+    password: NOVIANTO
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mnoviantoanggoro@gmail.com
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      #  ssl.trust: ${MAIL_SERVER_HOST}
+      password: aeufnalrxplogcbb
+
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+    redis:
+      host: localhost
+      port: 6379
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 50MB
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: DEBUG
+        security: DEBUG
