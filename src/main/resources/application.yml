@@ -14,6 +14,7 @@ spring:
     properties.mail.smtp:
       auth: true
       starttls.enable: true
+      starttls.required: true
       #  ssl.trust: ${MAIL_SERVER_HOST}
       password: aeufnalrxplogcbb
 
@@ -47,3 +48,10 @@ logging:
       springframework:
         web: DEBUG
         security: DEBUG
+
+custom:
+  jwt:
+    token:
+      access-expiration-time: 3600000
+      refresh-expiration-time: 86400000
+      secret: c8d7c086fe64a415ee1fafe90b1a663ef635f903b129d2bd752af401c817bee0
