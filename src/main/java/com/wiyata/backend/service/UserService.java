@@ -1,5 +1,6 @@
 package com.wiyata.backend.service;
 
+import com.wiyata.backend.model.User;
 import com.wiyata.backend.payload.request.LoginRequest;
 import com.wiyata.backend.payload.request.RegisterRequest;
 import com.wiyata.backend.payload.response.LoginResponse;
@@ -14,6 +15,10 @@ public interface UserService {
     LoginResponse login(LoginRequest loginRequest);
 
     JwtToken rotateToken(String requestRefreshToken);
+
+    User getUserByEmail(String email);
+
+    void changePassword(String email, String password);
 
     String logout(String email);
 }

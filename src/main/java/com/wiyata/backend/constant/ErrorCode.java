@@ -39,7 +39,7 @@ public enum ErrorCode {
     NOT_FOUND_PROVIDER("Platform login sosial ini tidak didukung.", HttpStatus.NOT_FOUND),
     NOT_FOUND_EMAIL_TOKEN("Token verifikasi email tidak ditemukan.", HttpStatus.NOT_FOUND),
 
-    ALREADY_EXISTS("User sudah ada.", HttpStatus.CONFLICT),
+    ALREADY_REGISTER("User sudah ada.", HttpStatus.CONFLICT),
 
     // Terkait forum
     BAD_REQUEST("Permintaan tidak valid.", HttpStatus.BAD_REQUEST),

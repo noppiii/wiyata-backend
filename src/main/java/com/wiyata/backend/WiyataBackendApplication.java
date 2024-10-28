@@ -7,9 +7,6 @@ import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
-@EnableCaching
-@EnableAsync
-@EnableRetry
 public class WiyataBackendApplication {
 
 	public static void main(String[] args) {
