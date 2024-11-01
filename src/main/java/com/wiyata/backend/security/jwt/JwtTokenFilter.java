@@ -72,7 +72,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String[] excludePath = {
-                "/api/users/join", "/api/users/login",
+                "/api/users/register", "/api/users/login",
                 "/api/users/send-email", "/api/users/auth-email"
         };
 
