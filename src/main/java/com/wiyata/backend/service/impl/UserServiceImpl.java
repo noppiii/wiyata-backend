@@ -112,8 +112,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Authentication validateAndGetAuthentication(String requestRefreshToken) {
+        return  jwtTokenProvider.getAuthenticationByRefreshToken(requestRefreshToken);
+    }
+
+    @Override
     public JwtToken rotateToken(String requestRefreshToken) {
-        return null;
+        Authentication authentication = validateAndGetAuthentication(requestRefreshToken);
+        String userEmail = authentication.getName();
+
+        checkLogin(userEmail);
+
+        String currentRefreshToken = jwtTokenUtils.getRefreshToken(userEmail);
+
+        if(isSnatch(requestRefreshToken, currentRefreshToken) == true) {
+            logout(authentication.getName());
+            throw new InvalidException(ErrorCode.SNATCH_TOKEN);
+        }
+
+        return jwtTokenProvider.refreshJwtToken(authentication);
+    }
+
+    @Override
+    public void checkLogin(String email) {
+        jwtTokenProvider.checkLogin(email);
     }
 
     @Override
@@ -129,7 +151,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isSnatch(String requestRefreshToken, String currentRefreshToken) {
+        return !currentRefreshToken.equals(requestRefreshToken);
+    }
+
+    @Override
     public String logout(String email) {
-        return "";
+        jwtTokenUtils.deleteRefreshToken(email);
+        return "Logout telah diproses.";
     }
 }
