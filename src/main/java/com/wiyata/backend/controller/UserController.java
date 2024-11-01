@@ -9,10 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -22,12 +19,12 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final EmailService emailService;
 
     @Operation(summary = "Register User", description = "Daftar dengan memasukkan alamat email, password, nama, dan [gambar profil] Anda.")
     @PostMapping(value = "/register")
-    public ResponseEntity<Void> join(@ModelAttribute @Valid RegisterRequest registerRequest) throws IOException {
+    public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequest registerRequest) throws IOException {
 
         userService.register(registerRequest);
         return ResponseEntity.ok().build();

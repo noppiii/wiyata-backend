@@ -25,7 +25,6 @@ public class RegisterRequest {
 
     @NotBlank(message = "Nama panggilan wajib diisi.")
     @Size(min = 2, max = 20, message = "Nama panggilan harus terdiri dari minimal 2 dan maksimal 20 karakter.")
-    @Pattern(regexp = "^[a-zA-Z가-힣0-9]*$", message = "Nama panggilan harus menggunakan huruf, angka, atau karakter Korea.")
     private String nickname;
 
     private MultipartFile profileImg;

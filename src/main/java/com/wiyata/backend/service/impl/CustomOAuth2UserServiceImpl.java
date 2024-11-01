@@ -18,6 +18,7 @@ import java.util.Map;
 @Service
 @Slf4j
 public class CustomOAuth2UserServiceImpl implements CustomOAuth2UserService, OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService = new DefaultOAuth2UserService();

@@ -38,14 +38,14 @@ import java.nio.file.StandardCopyOption;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private PasswordEncoder passwordEncoder;
-    private UserRepository userRepository;
-    private EmailRedisRepository emailRedisRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final EmailRedisRepository emailRedisRepository;
 
-    private Oauth2Revoke oauth2Revoke;
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
-    private JwtTokenProvider jwtTokenProvider;
-    private JwtTokenUtils jwtTokenUtils;
+    private final Oauth2Revoke oauth2Revoke;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenUtils jwtTokenUtils;
 
     @Value("${profile.image.store-directory}")
     private String profileImgStoreDirectory;
@@ -59,9 +59,9 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateException(ErrorCode.ALREADY_REGISTER);
         });
 
-        if (!emailRedisRepository.existToken(registerRequest.getEmail())) {
-            throw new NotFoundException(ErrorCode.EXPIRED_EMAIL_TOKEN);
-        }
+//        if (!emailRedisRepository.existToken(registerRequest.getEmail())) {
+//            throw new NotFoundException(ErrorCode.EXPIRED_EMAIL_TOKEN);
+//        }
 
         MultipartFile profileImg = registerRequest.getProfileImg();
         String profileImgUrl;
