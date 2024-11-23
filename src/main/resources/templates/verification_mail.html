@@ -1,0 +1,32 @@
+
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Template Email Verifikasi</title>
+</head>
+<body>
+<div style="font-family: 'Apple SD Gothic Neo', 'sans-serif' !important; width: 540px; height: 600px; border-top: 4px solid #17B8DC; margin: 100px auto; padding: 30px 0; box-sizing: border-box;">
+    <h1 style="margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400;">
+        <span style="font-size: 15px; margin: 0 0 10px 3px;"><b>Wiyata</b></span><br />
+        <span style="color: #17B8DC;">Panduan Verifikasi Email</span>
+    </h1>
+    <p style="font-size: 16px; line-height: 26px; margin-top: 50px; padding: 0 5px;">
+        Halo.<br />
+        Terima kasih banyak telah mendaftar di <b>✈️ Wiyata</b>.<br />
+        Silakan klik tombol <b style="color: #17B8DC;">Verifikasi Email</b> di bawah ini untuk menyelesaikan verifikasi email Anda.<br />
+        Terima kasih.
+    </p>
+
+    <a style="color: #FFF; text-decoration: none; text-align: center;" th:href="${auth_url}" target="_blank">
+        <p style="display: inline-block; width: 210px; height: 45px; margin: 30px 5px 40px; background: #17B8DC; line-height: 45px; vertical-align: middle; font-size: 16px;">Verifikasi Email</p>
+    </a>
+
+    <div style="border-top: 1px solid #DDD; padding: 5px;">
+        <p style="font-size: 13px; line-height: 21px; color: #555;">
+            Jika tombol tidak berfungsi, salin dan tempel link di bawah ini ke browser Anda.<br />
+            <span th:text="${auth_url}"></span>
+        </p>
+    </div>
+</div>
+</body>
+</html>

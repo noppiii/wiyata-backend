@@ -14,6 +14,22 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
 
+  security:
+    jwt:
+      secret-key: YcHvgol1k6Zj8ZNciVxUdDMwbNS01QXQ
+      access-valid-time:  3600000
+      refresh-valid-time: 3600000
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mnoviantoanggoro@gmail.com
+    password: uqpgdvpkxigesyqq
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      starttls.required: true
+
 logging:
   level:
     root: INFO
