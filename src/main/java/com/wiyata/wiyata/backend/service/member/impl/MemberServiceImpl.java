@@ -16,16 +16,20 @@ import com.wiyata.wiyata.backend.repository.member.TokenRepository;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenProvider;
 import com.wiyata.wiyata.backend.service.mail.MailService;
 import com.wiyata.wiyata.backend.service.member.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -96,5 +100,29 @@ public class MemberServiceImpl implements MemberService {
         tokenRepository.save(RefreshToken.builder().refreshToken(refreshToken).build());
 
         return ResponseEntity.status(HttpStatus.OK).body(memberResponse.successLogin(member.getMemberProfile().getNickname()));
+    }
+
+    @Override
+    public ResponseEntity<MemberResponse> memberRefreshToAccess(HttpServletRequest request, HttpServletResponse response) {
+        String refreshToken = jwtTokenProvider.resolveRefreshToken(request);
+
+        if (refreshToken != null) {
+            if (jwtTokenProvider.validateToken(refreshToken)) {
+                String username = jwtTokenProvider.getUserName(refreshToken);
+                List<String> roles = jwtTokenProvider.getRoles(username);
+                String newAccessToken = jwtTokenProvider.createAccessToken(username, roles);
+                jwtTokenProvider.setHeaderAccessToken(response, newAccessToken);
+                this.setAuthentication(newAccessToken);
+
+                return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse.successCreateToken());
+            }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(memberResponse.expireToken());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(memberResponse.notFoundRefreshToken());
+    }
+
+    public void setAuthentication(String token) {
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

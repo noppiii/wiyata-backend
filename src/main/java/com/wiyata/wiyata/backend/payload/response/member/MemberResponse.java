@@ -54,5 +54,20 @@ public class MemberResponse {
         resultData.put("nickname", nickname);
         return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), resultData);
     }
+
+    public MemberResponse successCreateToken() {
+        UserConstant responseCode = UserConstant.SUCCESS_CREATE_TOKEN;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
+
+    public MemberResponse expireToken() {
+        UserConstant responseCode = UserConstant.EXPIRE_TOKEN;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
+
+    public MemberResponse notFoundRefreshToken() {
+        UserConstant responseCode = UserConstant.NOT_FOUND_REFRESH_TOKEN;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
 }
 

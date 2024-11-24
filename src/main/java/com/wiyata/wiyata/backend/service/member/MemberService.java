@@ -4,6 +4,7 @@ import com.wiyata.wiyata.backend.payload.request.member.EmailAuthRequest;
 import com.wiyata.wiyata.backend.payload.request.member.LoginRequest;
 import com.wiyata.wiyata.backend.payload.request.member.MemberSaveRequest;
 import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 
@@ -14,4 +15,6 @@ public interface MemberService {
     ResponseEntity<MemberResponse> confirmEmail(EmailAuthRequest emailRequest);
 
     ResponseEntity<MemberResponse> memberLogin(LoginRequest request, HttpServletResponse response);
+
+    ResponseEntity<MemberResponse> memberRefreshToAccess(HttpServletRequest request, HttpServletResponse response);
 }

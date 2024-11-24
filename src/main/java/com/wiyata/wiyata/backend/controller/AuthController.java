@@ -5,6 +5,7 @@ import com.wiyata.wiyata.backend.payload.request.member.EmailAuthRequest;
 import com.wiyata.wiyata.backend.payload.request.member.MemberSaveRequest;
 import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
 import com.wiyata.wiyata.backend.service.member.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<MemberResponse> login(@Valid @RequestBody LoginRequest request, HttpServletResponse response) {
         return memberService.memberLogin(request, response);
+    }
+
+    @GetMapping("/refresh")
+    public ResponseEntity<MemberResponse> getAccessToken(HttpServletRequest request, HttpServletResponse response) {
+        return memberService.memberRefreshToAccess(request, response);
     }
 }
