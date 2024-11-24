@@ -4,6 +4,7 @@ import com.wiyata.wiyata.backend.constant.UserConstant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -40,6 +41,18 @@ public class MemberResponse {
     public MemberResponse failEmailAuth() {
         UserConstant responseCode = UserConstant.FAIL_EMAIL_AUTH;
         return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
+
+    public MemberResponse invalidUsernameOrPassword() {
+        UserConstant responseCode = UserConstant.INVALID_USERNAME_OR_PASSWORD;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
+
+    public MemberResponse successLogin(String nickname) {
+        UserConstant responseCode = UserConstant.SUCCESS_LOGIN;
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("nickname", nickname);
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), resultData);
     }
 }
 

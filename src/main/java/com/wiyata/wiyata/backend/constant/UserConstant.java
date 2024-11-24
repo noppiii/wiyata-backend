@@ -9,7 +9,9 @@ public enum UserConstant {
     SUCCESS_SIGNUP("Pendaftaran pengguna berhasil dilakukan.", HttpStatus.CREATED),
     DUPLICATE_ID("ID sudah digunakan.", HttpStatus.BAD_REQUEST),
     SUCCESS_EMAIL_AUTH("Verifikasi email berhasil dilakukan.", HttpStatus.ACCEPTED),
-    FAIL_EMAIL_AUTH("URI verifikasi telah kedaluwarsa atau tidak valid. Silakan coba lagi.", HttpStatus.METHOD_NOT_ALLOWED);
+    FAIL_EMAIL_AUTH("URI verifikasi telah kedaluwarsa atau tidak valid. Silakan coba lagi.", HttpStatus.METHOD_NOT_ALLOWED),
+    INVALID_USERNAME_OR_PASSWORD("Username atau password tidak valid.", HttpStatus.BAD_REQUEST),
+    SUCCESS_LOGIN("Login berhasil dilakukan.", HttpStatus.ACCEPTED),;
 
     private final String message;
     private final HttpStatus status;

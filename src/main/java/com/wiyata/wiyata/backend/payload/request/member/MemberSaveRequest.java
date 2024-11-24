@@ -15,11 +15,8 @@ public class MemberSaveRequest {
     private String userName;
 
     @NotBlank(message = "Password tidak boleh kosong.")
-    @Size(min = 8, message = "Password harus memiliki panjang minimal 8 karakter.")
-    @Pattern(
-            regexp = "^(?=.*[A-Z])(?=.*[!@#$%^&*()_+=<>?/{}~])(?=.*[a-zA-Z]).{8,}$",
-            message = "Password harus mengandung minimal 1 huruf kapital, 1 karakter khusus, dan panjang minimal 8 karakter."
-    )
+    @Size(min = 5, max = 20, message = "Kata sandi harus terdiri dari minimal 8 dan maksimal 20 karakter.")
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Kata sandi harus menggunakan huruf besar, huruf kecil, angka, dan karakter khusus.")
     private String password;
 
     @NotBlank(message = "Nama asli tidak boleh kosong.")
