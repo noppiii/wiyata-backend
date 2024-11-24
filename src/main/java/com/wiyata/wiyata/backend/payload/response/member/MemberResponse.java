@@ -1,10 +1,9 @@
-package com.wiyata.wiyata.backend.payload.response;
+package com.wiyata.wiyata.backend.payload.response.member;
 
 import com.wiyata.wiyata.backend.constant.UserConstant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -28,9 +27,19 @@ public class MemberResponse {
         return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), resultData);
     }
 
-
     public MemberResponse failMemberSignUp() {
         UserConstant responseCode = UserConstant.DUPLICATE_ID;
         return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
+
+    public MemberResponse successEmailAuth() {
+        UserConstant responseCode = UserConstant.SUCCESS_EMAIL_AUTH;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
+
+    public MemberResponse failEmailAuth() {
+        UserConstant responseCode = UserConstant.FAIL_EMAIL_AUTH;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
 }
+

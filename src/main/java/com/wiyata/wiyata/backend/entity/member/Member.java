@@ -65,6 +65,10 @@ public class Member implements UserDetails {
                 .roles(Collections.singletonList("ROLE_USER"));
     }
 
+    public void emailVerifiedSuccess() {
+        this.emailAuth = true;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()

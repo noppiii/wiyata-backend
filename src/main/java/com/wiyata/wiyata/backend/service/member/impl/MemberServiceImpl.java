@@ -1,10 +1,13 @@
 package com.wiyata.wiyata.backend.service.member.impl;
 
+import com.wiyata.wiyata.backend.constant.ErrorConstant;
 import com.wiyata.wiyata.backend.entity.member.EmailAuth;
 import com.wiyata.wiyata.backend.entity.member.Member;
+import com.wiyata.wiyata.backend.exception.CustomException;
+import com.wiyata.wiyata.backend.payload.request.member.EmailAuthRequest;
 import com.wiyata.wiyata.backend.payload.request.member.MailRequest;
 import com.wiyata.wiyata.backend.payload.request.member.MemberSaveRequest;
-import com.wiyata.wiyata.backend.payload.response.MemberResponse;
+import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
 import com.wiyata.wiyata.backend.repository.member.EmailAuthRepository;
 import com.wiyata.wiyata.backend.repository.member.MemberRepository;
 import com.wiyata.wiyata.backend.service.mail.MailService;
@@ -16,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @Service
@@ -46,5 +51,22 @@ public class MemberServiceImpl implements MemberService {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(memberResponse.failMemberSignUp());
+    }
+
+    @Override
+    public ResponseEntity<MemberResponse> confirmEmail(EmailAuthRequest emailRequest) {
+        EmailAuth emailAuth = emailAuthRepository.findValidAuthByEmail(emailRequest.getEmail(), emailRequest.getUuid(), LocalDateTime.now()).orElse(null);
+
+        if (emailAuth == null) {
+            throw new CustomException(ErrorConstant.METHOD_NOT_ALLOWED);
+        }
+
+        Member member = memberRepository.findByEmail(emailRequest.getEmail())
+                .orElseThrow(() -> new CustomException(ErrorConstant.NOT_FOUND));
+
+        emailAuth.useToken();
+        member.emailVerifiedSuccess();
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(memberResponse.successEmailAuth());
     }
 }

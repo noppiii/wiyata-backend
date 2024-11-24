@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum UserConstant {
 
-    SUCCESS_SIGNUP("User registration completed successfully.", HttpStatus.CREATED),
-    DUPLICATE_ID("The ID is already in use.", HttpStatus.BAD_REQUEST);
+    SUCCESS_SIGNUP("Pendaftaran pengguna berhasil dilakukan.", HttpStatus.CREATED),
+    DUPLICATE_ID("ID sudah digunakan.", HttpStatus.BAD_REQUEST),
+    SUCCESS_EMAIL_AUTH("Verifikasi email berhasil dilakukan.", HttpStatus.ACCEPTED),
+    FAIL_EMAIL_AUTH("URI verifikasi telah kedaluwarsa atau tidak valid. Silakan coba lagi.", HttpStatus.METHOD_NOT_ALLOWED);
 
     private final String message;
     private final HttpStatus status;
