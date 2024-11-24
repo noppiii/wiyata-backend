@@ -38,4 +38,9 @@ public class AuthController {
     public ResponseEntity<MemberResponse> getAccessToken(HttpServletRequest request, HttpServletResponse response) {
         return memberService.memberRefreshToAccess(request, response);
     }
+
+    @GetMapping("/status")
+    public ResponseEntity<MemberResponse> getInfo(HttpServletRequest request) {
+        return memberService.getMemberInfo(request);
+    }
 }

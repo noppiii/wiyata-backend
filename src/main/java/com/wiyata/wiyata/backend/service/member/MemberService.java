@@ -17,4 +17,6 @@ public interface MemberService {
     ResponseEntity<MemberResponse> memberLogin(LoginRequest request, HttpServletResponse response);
 
     ResponseEntity<MemberResponse> memberRefreshToAccess(HttpServletRequest request, HttpServletResponse response);
+
+    ResponseEntity<MemberResponse> getMemberInfo(HttpServletRequest request);
 }

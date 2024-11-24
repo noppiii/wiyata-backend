@@ -14,6 +14,7 @@ import com.wiyata.wiyata.backend.repository.member.EmailAuthRepository;
 import com.wiyata.wiyata.backend.repository.member.MemberRepository;
 import com.wiyata.wiyata.backend.repository.member.TokenRepository;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenProvider;
+import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
 import com.wiyata.wiyata.backend.service.mail.MailService;
 import com.wiyata.wiyata.backend.service.member.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,6 +45,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberResponse memberResponse;
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenRepository tokenRepository;
+    private final JwtTokenService jwtTokenService;
 
     @Override
     public ResponseEntity<MemberResponse> memberSignUp(MemberSaveRequest signUpRequest) {
@@ -119,6 +121,20 @@ public class MemberServiceImpl implements MemberService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(memberResponse.expireToken());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(memberResponse.notFoundRefreshToken());
+    }
+
+    @Override
+    public ResponseEntity<MemberResponse> getMemberInfo(HttpServletRequest request) {
+        String accessToken = jwtTokenProvider.resolveAccessToken(request);
+
+        if (accessToken != null) {
+            if (jwtTokenProvider.validateToken(accessToken)) {
+                String nickname = jwtTokenService.tokenToNickname(request);
+                return ResponseEntity.status(HttpStatus.OK).body(memberResponse.successLogin(nickname));
+            }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(memberResponse.expireToken());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(memberResponse.notFoundAccessToken());
     }
 
     public void setAuthentication(String token) {

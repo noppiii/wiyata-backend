@@ -69,5 +69,10 @@ public class MemberResponse {
         UserConstant responseCode = UserConstant.NOT_FOUND_REFRESH_TOKEN;
         return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
+
+    public MemberResponse notFoundAccessToken() {
+        UserConstant responseCode = UserConstant.NOT_FOUND_ACCESS_TOKEN;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
 }
 
