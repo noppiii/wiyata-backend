@@ -1,6 +1,6 @@
 package com.wiyata.wiyata.backend.payload.response.member;
 
-import com.wiyata.wiyata.backend.constant.UserConstant;
+import com.wiyata.wiyata.backend.constant.AuthConstant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class AuthResponse {
     private Object result;
 
     public AuthResponse successMemberSignUp(String nickname) {
-        UserConstant responseCode = UserConstant.SUCCESS_SIGNUP;
+        AuthConstant responseCode = AuthConstant.SUCCESS_SIGNUP;
         Map<String, Object> resultData = new HashMap<>();
         resultData.put("nickname", nickname);
 
@@ -28,54 +28,54 @@ public class AuthResponse {
     }
 
     public AuthResponse failMemberSignUp() {
-        UserConstant responseCode = UserConstant.DUPLICATE_ID;
+        AuthConstant responseCode = AuthConstant.DUPLICATE_ID;
         return new AuthResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
 
     public AuthResponse successEmailAuth() {
-        UserConstant responseCode = UserConstant.SUCCESS_EMAIL_AUTH;
+        AuthConstant responseCode = AuthConstant.SUCCESS_EMAIL_AUTH;
         return new AuthResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
 
     public AuthResponse failEmailAuth() {
-        UserConstant responseCode = UserConstant.FAIL_EMAIL_AUTH;
+        AuthConstant responseCode = AuthConstant.FAIL_EMAIL_AUTH;
         return new AuthResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
 
     public AuthResponse invalidUsernameOrPassword() {
-        UserConstant responseCode = UserConstant.INVALID_USERNAME_OR_PASSWORD;
+        AuthConstant responseCode = AuthConstant.INVALID_USERNAME_OR_PASSWORD;
         return new AuthResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
 
     public AuthResponse successLogin(String nickname) {
-        UserConstant responseCode = UserConstant.SUCCESS_LOGIN;
+        AuthConstant responseCode = AuthConstant.SUCCESS_LOGIN;
         Map<String, Object> resultData = new HashMap<>();
         resultData.put("nickname", nickname);
         return new AuthResponse(responseCode.getStatus().value(), responseCode.getMessage(), resultData);
     }
 
     public AuthResponse successCreateToken() {
-        UserConstant responseCode = UserConstant.SUCCESS_CREATE_TOKEN;
+        AuthConstant responseCode = AuthConstant.SUCCESS_CREATE_TOKEN;
         return new AuthResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
 
     public AuthResponse expireToken() {
-        UserConstant responseCode = UserConstant.EXPIRE_TOKEN;
+        AuthConstant responseCode = AuthConstant.EXPIRE_TOKEN;
         return new AuthResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
 
     public AuthResponse notFoundRefreshToken() {
-        UserConstant responseCode = UserConstant.NOT_FOUND_REFRESH_TOKEN;
+        AuthConstant responseCode = AuthConstant.NOT_FOUND_REFRESH_TOKEN;
         return new AuthResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
 
     public AuthResponse notFoundAccessToken() {
-        UserConstant responseCode = UserConstant.NOT_FOUND_ACCESS_TOKEN;
+        AuthConstant responseCode = AuthConstant.NOT_FOUND_ACCESS_TOKEN;
         return new AuthResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
 
     public AuthResponse successLogout() {
-        UserConstant responseCode = UserConstant.SUCCESS_LOGOUT;
+        AuthConstant responseCode = AuthConstant.SUCCESS_LOGOUT;
         return new AuthResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public enum UserConstant {
+public enum AuthConstant {
 
     SUCCESS_SIGNUP("Pendaftaran pengguna berhasil dilakukan.", HttpStatus.CREATED),
     DUPLICATE_ID("ID sudah digunakan.", HttpStatus.BAD_REQUEST),
@@ -21,7 +21,7 @@ public enum UserConstant {
     private final String message;
     private final HttpStatus status;
 
-    UserConstant(String message, HttpStatus status) {
+    AuthConstant(String message, HttpStatus status) {
         this.message = message;
         this.status = status;
     }
