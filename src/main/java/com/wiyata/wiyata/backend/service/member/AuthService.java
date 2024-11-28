@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Map;
+
 public interface AuthService {
 
     ResponseEntity<AuthResponse> memberSignUp(MemberSaveRequest signUpRequest);
@@ -21,4 +23,6 @@ public interface AuthService {
     ResponseEntity<AuthResponse> getMemberInfo(HttpServletRequest request);
 
     ResponseEntity<AuthResponse> memberLogout(HttpServletRequest request, HttpServletResponse response);
+
+    ResponseEntity<AuthResponse> getTmpPassword(Map<String, String> userInfo);
 }

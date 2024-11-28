@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -148,8 +149,47 @@ public class AuthServiceImpl implements AuthService {
         return ResponseEntity.status(HttpStatus.OK).body(authResponse.successLogout());
     }
 
+    @Override
+    public ResponseEntity<AuthResponse> getTmpPassword(Map<String, String> userInfo) {
+        String userName = userInfo.get("userName");
+        String userEmail = userInfo.get("userEmail");
+
+        Member member = memberRepository.findByUserName(userName).orElseThrow(() -> new CustomException(ErrorConstant.NOT_FOUND));
+
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(authResponse.notFoundUserName());
+        }
+
+        if (member.getMemberInfo().getEmail().equals(userEmail)) {
+            String tmpPassword = passwordEncoder.encode(passwordCombination());
+            memberRepository.updateMemberPassword(tmpPassword, userName);
+
+            MailRequest mailRequest = mailService.findPasswordMail(tmpPassword, userEmail);
+            mailService.sendMail(mailRequest);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(authResponse.successIssuePassword());
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(authResponse.failIssuePassword());
+    }
+
     public void setAuthentication(String token) {
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    public String passwordCombination() {
+        char[] charSet = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+                'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+
+        String pwd = "";
+
+        int idx = 0;
+        for (int i = 0; i < 10; i++) {
+            idx = (int) (charSet.length * Math.random());
+            pwd += charSet[idx];
+        }
+
+        return pwd;
     }
 }

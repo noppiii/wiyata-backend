@@ -4,13 +4,17 @@ import com.wiyata.wiyata.backend.payload.request.member.LoginRequest;
 import com.wiyata.wiyata.backend.payload.request.member.EmailAuthRequest;
 import com.wiyata.wiyata.backend.payload.request.member.MemberSaveRequest;
 import com.wiyata.wiyata.backend.payload.response.member.AuthResponse;
+import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
 import com.wiyata.wiyata.backend.service.member.AuthService;
+import com.wiyata.wiyata.backend.service.member.impl.MemberServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -42,6 +46,11 @@ public class AuthController {
     @GetMapping("/status")
     public ResponseEntity<AuthResponse> getInfo(HttpServletRequest request) {
         return authService.getMemberInfo(request);
+    }
+
+    @GetMapping("/password")
+    public ResponseEntity<AuthResponse> findUserPassword(@RequestBody Map<String, String> userInfo) {
+        return authService.getTmpPassword(userInfo);
     }
 
     @PostMapping("/logout")

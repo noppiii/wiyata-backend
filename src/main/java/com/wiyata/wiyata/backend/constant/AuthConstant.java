@@ -16,7 +16,10 @@ public enum AuthConstant {
     EXPIRE_TOKEN("Token telah kadaluarsa", HttpStatus.UNAUTHORIZED),
     NOT_FOUND_REFRESH_TOKEN("Refresh token tidak ditemukan.", HttpStatus.NOT_FOUND),
     NOT_FOUND_ACCESS_TOKEN("Access token tidak ditemukan.", HttpStatus.NOT_FOUND),
-    SUCCESS_LOGOUT("Logout berhasil dilakukan.", HttpStatus.OK),;
+    SUCCESS_LOGOUT("Logout berhasil dilakukan.", HttpStatus.OK),
+    USERNAME_NOT_FOUND("Data user tidak ditemukan", HttpStatus.NOT_FOUND),
+    SUCCESS_ISSUE_PASSWORD("Password berhasil diperbaruhi", HttpStatus.ACCEPTED),
+    FAIL_ISSUE_PASSWORD("Password gagal diperbaruhi", HttpStatus.BAD_REQUEST);
 
     private final String message;
     private final HttpStatus status;

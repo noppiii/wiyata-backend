@@ -71,4 +71,20 @@ public class MailServiceImpl implements MailService {
             throw new RuntimeException("Gagal mengirim email", e);
         }
     }
+
+    @Override
+    public MailRequest findPasswordMail(String tmpPassword, String userEmail) {
+        String title = "Panduan Reset Password Wiyata";
+        String fromAddress = "mnoviantoanggoro@gmail.com";
+
+        return MailRequest.builder()
+                .toAddress(userEmail)
+                .title(title)
+                .message(null)
+                .fromAddress(fromAddress)
+                .templateName("reset_password_mail")
+                .variables(Map.of("temporary_password", tmpPassword))
+                .build();
+    }
+
 }
