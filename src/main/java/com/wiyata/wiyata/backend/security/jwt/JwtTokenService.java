@@ -18,4 +18,9 @@ public class JwtTokenService {
         Member member = memberRepository.findByUserName(jwtTokenProvider.getUserName(accessToken)).orElseThrow();
         return member.getMemberProfile().getNickname();
     }
+
+    public String tokenToUserName(HttpServletRequest request) {
+        String accessToken = jwtTokenProvider.resolveAccessToken(request);
+        return jwtTokenProvider.getUserName(accessToken);
+    }
 }

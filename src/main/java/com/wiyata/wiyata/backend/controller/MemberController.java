@@ -2,6 +2,7 @@ package com.wiyata.wiyata.backend.controller;
 
 import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
 import com.wiyata.wiyata.backend.service.member.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,5 +24,10 @@ public class MemberController {
     @GetMapping("/{nickname}")
     public ResponseEntity<MemberResponse> checkNickName(@PathVariable("nickname") String nickname) {
         return memberService.checkValidNickName(nickname);
+    }
+
+    @GetMapping("/my-page")
+    public ResponseEntity<MemberResponse> getMemberPage(HttpServletRequest request) {
+        return memberService.getMemberPage(request);
     }
 }
