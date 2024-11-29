@@ -6,4 +6,6 @@ import org.springframework.http.ResponseEntity;
 public interface MemberService {
 
     ResponseEntity<MemberResponse> memberValidation(String username);
+
+    ResponseEntity<MemberResponse> checkValidNickName(String nickname);
 }

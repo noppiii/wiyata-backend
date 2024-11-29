@@ -20,6 +20,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Modifying
     @Transactional
-    @Query("update Member as m set m.password = :password where m.userName= :userName")
+    @Query("UPDATE Member as m set m.password = :password WHERE m.userName= :userName")
     int updateMemberPassword(@Param("password") String password, @Param("userName") String userName);
+
+    @Query("SELECT (COUNT(m) > 0) FROM Member m WHERE m.memberProfile.nickname = :nickName")
+    boolean existsByNickName(@Param("nickName") String nickName);
 }

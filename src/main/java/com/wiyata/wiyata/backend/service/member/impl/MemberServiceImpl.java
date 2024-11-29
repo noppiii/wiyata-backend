@@ -29,4 +29,14 @@ public class MemberServiceImpl implements MemberService {
 
         return ResponseEntity.status(HttpStatus.OK).body(memberResponse.canUseUsername());
     }
+
+    @Override
+    public ResponseEntity<MemberResponse> checkValidNickName(String nickname) {
+        boolean isValid = memberRepository.existsByNickName(nickname);
+
+        if (isValid) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(memberResponse.duplicateNickName());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(memberResponse.canUseNickName());
+    }
 }

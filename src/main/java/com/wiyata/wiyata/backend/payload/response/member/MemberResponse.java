@@ -25,4 +25,14 @@ public class MemberResponse {
         MemberConstant responseCode = MemberConstant.CAN_USE_USERNAME;
         return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
+
+    public MemberResponse duplicateNickName() {
+        MemberConstant responseCode = MemberConstant.DUPLICATE_NICKNAME;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
+
+    public MemberResponse canUseNickName() {
+        MemberConstant responseCode = MemberConstant.CAN_USE_NICKNAME;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
 }

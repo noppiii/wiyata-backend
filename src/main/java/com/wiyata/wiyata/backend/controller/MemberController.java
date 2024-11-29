@@ -19,4 +19,9 @@ public class MemberController {
     public ResponseEntity<MemberResponse> checkId(@PathVariable("username") String username) {
         return memberService.memberValidation(username);
     }
+
+    @GetMapping("/{nickname}")
+    public ResponseEntity<MemberResponse> checkNickName(@PathVariable("nickname") String nickname) {
+        return memberService.checkValidNickName(nickname);
+    }
 }
