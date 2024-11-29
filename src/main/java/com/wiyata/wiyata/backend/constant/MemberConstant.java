@@ -11,7 +11,9 @@ public enum MemberConstant {
     DUPLICATE_NICKNAME("Nick name sudah digunakan", HttpStatus.CONFLICT),
     CAN_USE_NICKNAME("Nick name ini tersedia", HttpStatus.OK),
     SUCCESS_GET_MEMBER_PAGE("Berhasil mendapatkan halaman user", HttpStatus.OK),
-    SUCCESS_GET_MEMBER_EDIT_PAGE("Berhasil mendapatkan halaman edit user", HttpStatus.OK);
+    SUCCESS_GET_MEMBER_EDIT_PAGE("Berhasil mendapatkan halaman edit user", HttpStatus.OK),
+    SUCCESS_CHANGE_MEMBER_IMG("Berhasil memperbaruhi gambar member", HttpStatus.OK),
+    FAIL_CHANGE_MEMBER_IMG("Gagal memberbaruhi gambar member", HttpStatus.BAD_REQUEST),;
 
     private final String message;
     private final HttpStatus status;

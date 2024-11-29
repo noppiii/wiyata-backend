@@ -57,4 +57,14 @@ public class MemberResponse {
         resultData.put("memberInfo", memberInfo);
         return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), resultData);
     }
+
+    public MemberResponse successChangeMemberImg() {
+        MemberConstant responseCode = MemberConstant.SUCCESS_CHANGE_MEMBER_IMG;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
+
+    public MemberResponse failChangeMemberImg() {
+        MemberConstant responseCode = MemberConstant.FAIL_CHANGE_MEMBER_IMG;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
 }

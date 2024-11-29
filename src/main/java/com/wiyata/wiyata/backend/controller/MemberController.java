@@ -1,11 +1,14 @@
 package com.wiyata.wiyata.backend.controller;
 
 import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
+import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
+import com.wiyata.wiyata.backend.service.global.FileService;
 import com.wiyata.wiyata.backend.service.member.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
@@ -16,6 +19,8 @@ import java.util.Map;
 public class MemberController {
 
     private final MemberService memberService;
+    private final FileService fileService;
+    private final JwtTokenService jwtTokenService;
 
     @GetMapping("/{username}")
     public ResponseEntity<MemberResponse> checkId(@PathVariable("username") String username) {
@@ -40,5 +45,10 @@ public class MemberController {
     @GetMapping("/profile/edit")
     public ResponseEntity<MemberResponse> getMemberEditPage(HttpServletRequest request) {
         return memberService.memberEditPage(request);
+    }
+
+    @PostMapping("/profile/img")
+    public ResponseEntity<MemberResponse> updateProfileImg(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request) {
+        return fileService.saveProfileImg(multipartFile, jwtTokenService.tokenToUserName(request));
     }
 }
