@@ -12,7 +12,9 @@ public enum ErrorConstant {
     FORBIDDEN("Akses ditolak.", HttpStatus.FORBIDDEN),
     NOT_FOUND("Sumber daya tidak ditemukan.", HttpStatus.NOT_FOUND),
     CONFLICT("Terjadi konflik.", HttpStatus.CONFLICT),
-    INTERNAL_SERVER_ERROR("Terjadi kesalahan yang tidak terduga.", HttpStatus.INTERNAL_SERVER_ERROR);
+    INTERNAL_SERVER_ERROR("Terjadi kesalahan yang tidak terduga.", HttpStatus.INTERNAL_SERVER_ERROR),
+    FAILED_READ_FILE("File tidak dapat dibaca.", HttpStatus.BAD_REQUEST),
+    FILE_NOT_FOUND("File tidak ada di direktori.", HttpStatus.NOT_FOUND),;
 
     private final String message;
     private final HttpStatus status;

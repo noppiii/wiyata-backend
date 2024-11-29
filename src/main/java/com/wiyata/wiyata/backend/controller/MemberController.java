@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -29,5 +30,10 @@ public class MemberController {
     @GetMapping("/my-page")
     public ResponseEntity<MemberResponse> getMemberPage(HttpServletRequest request) {
         return memberService.getMemberPage(request);
+    }
+
+    @GetMapping("/my-page/img")
+    public ResponseEntity<Object> getMemberImg(HttpServletRequest request) throws FileNotFoundException {
+        return memberService.getMemberImg(request);
     }
 }

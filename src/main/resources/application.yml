@@ -37,3 +37,6 @@ logging:
       springframework:
         web: DEBUG
         security: DEBUG
+
+file:
+  upload-dir: ./image
