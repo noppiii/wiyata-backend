@@ -1,5 +1,6 @@
 package com.wiyata.wiyata.backend.controller;
 
+import com.wiyata.wiyata.backend.payload.request.member.MemberUpdateRequest;
 import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
 import com.wiyata.wiyata.backend.service.global.FileService;
@@ -50,5 +51,10 @@ public class MemberController {
     @PostMapping("/profile/img")
     public ResponseEntity<MemberResponse> updateProfileImg(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request) {
         return fileService.saveProfileImg(multipartFile, jwtTokenService.tokenToUserName(request));
+    }
+
+    @PostMapping("/profile/edit")
+    public ResponseEntity<MemberResponse> editMemberProfile(@RequestBody MemberUpdateRequest memberUpdateRequest, HttpServletRequest request) {
+        return memberService.updateMember(memberUpdateRequest, request);
     }
 }

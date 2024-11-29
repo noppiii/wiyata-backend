@@ -5,6 +5,7 @@ import com.wiyata.wiyata.backend.entity.member.Member;
 import com.wiyata.wiyata.backend.entity.member.MemberInfo;
 import com.wiyata.wiyata.backend.entity.member.MemberProfile;
 import com.wiyata.wiyata.backend.exception.CustomException;
+import com.wiyata.wiyata.backend.payload.request.member.MemberUpdateRequest;
 import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
 import com.wiyata.wiyata.backend.repository.member.MemberRepository;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
@@ -96,5 +97,19 @@ public class MemberServiceImpl implements MemberService {
         MemberInfo memberInfo = member.getMemberInfo();
 
         return ResponseEntity.status(HttpStatus.OK).body(memberResponse.successGetMemberEditPage(memberProfile, memberInfo));
+    }
+
+    @Override
+    public ResponseEntity<MemberResponse> updateMember(MemberUpdateRequest memberUpdateRequest, HttpServletRequest request) {
+        Long id = jwtTokenService.tokenToUserId(request);
+        Member member = memberRepository.findMemberId(id).orElseThrow();
+
+        member.getMemberProfile().setNickname(memberUpdateRequest.getNickName());
+        member.getMemberProfile().setBio(memberUpdateRequest.getBio());
+        member.getMemberInfo().setBrithday(memberUpdateRequest.getBirthday());
+        member.getMemberInfo().setEmail(memberUpdateRequest.getEmail());
+        member.getMemberInfo().setGender(memberUpdateRequest.getGender());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse.successEditMemberInfo(member.getMemberProfile(), member.getMemberInfo()));
     }
 }

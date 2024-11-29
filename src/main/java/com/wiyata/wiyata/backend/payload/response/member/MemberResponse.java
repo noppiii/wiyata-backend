@@ -67,4 +67,12 @@ public class MemberResponse {
         MemberConstant responseCode = MemberConstant.FAIL_CHANGE_MEMBER_IMG;
         return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
     }
+
+    public MemberResponse successEditMemberInfo(MemberProfile memberProfile, MemberInfo memberInfo) {
+        MemberConstant responseCode = MemberConstant.SUCCESS_EDIT_MEMBER_INFO;
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("memberProfile", memberProfile);
+        resultData.put("memberInfo", memberInfo);
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), resultData);
+    }
 }

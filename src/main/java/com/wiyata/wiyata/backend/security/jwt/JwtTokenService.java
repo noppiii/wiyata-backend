@@ -23,4 +23,9 @@ public class JwtTokenService {
         String accessToken = jwtTokenProvider.resolveAccessToken(request);
         return jwtTokenProvider.getUserName(accessToken);
     }
+
+    public Long tokenToUserId(HttpServletRequest request) {
+        String userName = tokenToUserName(request);
+        return memberRepository.findByUserName(userName).orElseThrow().getId();
+    }
 }
