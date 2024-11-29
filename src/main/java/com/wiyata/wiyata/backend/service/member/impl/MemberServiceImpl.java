@@ -2,6 +2,8 @@ package com.wiyata.wiyata.backend.service.member.impl;
 
 import com.wiyata.wiyata.backend.constant.ErrorConstant;
 import com.wiyata.wiyata.backend.entity.member.Member;
+import com.wiyata.wiyata.backend.entity.member.MemberInfo;
+import com.wiyata.wiyata.backend.entity.member.MemberProfile;
 import com.wiyata.wiyata.backend.exception.CustomException;
 import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
 import com.wiyata.wiyata.backend.repository.member.MemberRepository;
@@ -84,5 +86,15 @@ public class MemberServiceImpl implements MemberService {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileResource.getFilename() + "\"")
                 .body(fileResource);
+    }
+
+    @Override
+    public ResponseEntity<MemberResponse> memberEditPage(HttpServletRequest request) {
+        String userName = jwtTokenService.tokenToUserName(request);
+        Member member = memberRepository.findByUserName(userName).orElseThrow(() -> new CustomException(ErrorConstant.UNAUTHORIZED));
+        MemberProfile memberProfile = member.getMemberProfile();
+        MemberInfo memberInfo = member.getMemberInfo();
+
+        return ResponseEntity.status(HttpStatus.OK).body(memberResponse.successGetMemberEditPage(memberProfile, memberInfo));
     }
 }

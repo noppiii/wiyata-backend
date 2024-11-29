@@ -36,4 +36,9 @@ public class MemberController {
     public ResponseEntity<Object> getMemberImg(HttpServletRequest request) throws FileNotFoundException {
         return memberService.getMemberImg(request);
     }
+
+    @GetMapping("/profile/edit")
+    public ResponseEntity<MemberResponse> getMemberEditPage(HttpServletRequest request) {
+        return memberService.memberEditPage(request);
+    }
 }

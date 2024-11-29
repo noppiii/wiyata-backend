@@ -2,6 +2,8 @@ package com.wiyata.wiyata.backend.payload.response.member;
 
 import com.wiyata.wiyata.backend.constant.AuthConstant;
 import com.wiyata.wiyata.backend.constant.MemberConstant;
+import com.wiyata.wiyata.backend.entity.member.MemberInfo;
+import com.wiyata.wiyata.backend.entity.member.MemberProfile;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,6 +47,14 @@ public class MemberResponse {
         Map<String, Object> resultData = new HashMap<>();
         resultData.put("nickname", nickname);
         resultData.put("bio", bio);
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), resultData);
+    }
+
+    public MemberResponse successGetMemberEditPage(MemberProfile memberProfile, MemberInfo memberInfo) {
+        MemberConstant responseCode = MemberConstant.SUCCESS_GET_MEMBER_EDIT_PAGE;
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("memberProfile", memberProfile);
+        resultData.put("memberInfo", memberInfo);
         return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), resultData);
     }
 }

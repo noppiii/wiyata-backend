@@ -15,4 +15,6 @@ public interface MemberService {
     ResponseEntity<MemberResponse> getMemberPage(HttpServletRequest request);
 
     ResponseEntity<Object> getMemberImg(HttpServletRequest request) throws FileNotFoundException;
+
+    ResponseEntity<MemberResponse> memberEditPage(HttpServletRequest request);
 }
