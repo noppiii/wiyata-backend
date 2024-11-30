@@ -1,7 +1,7 @@
 package com.wiyata.wiyata.backend.security.jwt;
 
-import com.wiyata.wiyata.backend.repository.member.MemberRepository;
-import com.wiyata.wiyata.backend.repository.member.TokenRepository;
+import com.wiyata.wiyata.backend.repository.MemberRepository;
+import com.wiyata.wiyata.backend.repository.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;

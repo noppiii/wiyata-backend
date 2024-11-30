@@ -8,7 +8,7 @@ import com.wiyata.wiyata.backend.exception.CustomException;
 import com.wiyata.wiyata.backend.payload.request.member.MemberUpdateRequest;
 import com.wiyata.wiyata.backend.payload.request.member.UpdatePasswordMemberRequest;
 import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
-import com.wiyata.wiyata.backend.repository.member.MemberRepository;
+import com.wiyata.wiyata.backend.repository.MemberRepository;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
 import com.wiyata.wiyata.backend.service.global.FileService;
 import com.wiyata.wiyata.backend.service.member.MemberService;

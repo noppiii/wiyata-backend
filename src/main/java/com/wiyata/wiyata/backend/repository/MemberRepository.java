@@ -1,4 +1,4 @@
-package com.wiyata.wiyata.backend.repository.member;
+package com.wiyata.wiyata.backend.repository;
 
 import com.wiyata.wiyata.backend.entity.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,6 @@
 package com.wiyata.wiyata.backend.service.member;
 
-import com.wiyata.wiyata.backend.repository.member.MemberRepository;
+import com.wiyata.wiyata.backend.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

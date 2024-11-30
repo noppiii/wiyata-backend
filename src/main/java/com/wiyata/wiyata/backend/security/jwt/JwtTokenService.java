@@ -1,7 +1,7 @@
 package com.wiyata.wiyata.backend.security.jwt;
 
 import com.wiyata.wiyata.backend.entity.member.Member;
-import com.wiyata.wiyata.backend.repository.member.MemberRepository;
+import com.wiyata.wiyata.backend.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
