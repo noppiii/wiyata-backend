@@ -14,7 +14,8 @@ public enum MemberConstant {
     SUCCESS_GET_MEMBER_EDIT_PAGE("Berhasil mendapatkan halaman edit user", HttpStatus.OK),
     SUCCESS_CHANGE_MEMBER_IMG("Berhasil memperbaruhi gambar member", HttpStatus.OK),
     FAIL_CHANGE_MEMBER_IMG("Gagal memberbaruhi gambar member", HttpStatus.BAD_REQUEST),
-    SUCCESS_EDIT_MEMBER_INFO("Berhasil memperbaruhi member info", HttpStatus.OK),;
+    SUCCESS_EDIT_MEMBER_INFO("Berhasil memperbaruhi member info", HttpStatus.OK),
+    SUCCESS_EDIT_MEMBER_PROFILE("Berhasil memperbaruhi member profile", HttpStatus.OK),;
 
     private final String message;
     private final HttpStatus status;

@@ -57,4 +57,9 @@ public class MemberController {
     public ResponseEntity<MemberResponse> editMemberProfile(@RequestBody MemberUpdateRequest memberUpdateRequest, HttpServletRequest request) {
         return memberService.updateMember(memberUpdateRequest, request);
     }
+
+    @PostMapping("/profile/bio")
+    public ResponseEntity<MemberResponse> updateComment(@RequestBody Map<String, String> bio, HttpServletRequest request) {
+        return memberService.updateComment(bio, request);
+    }
 }

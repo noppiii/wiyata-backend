@@ -75,4 +75,11 @@ public class MemberResponse {
         resultData.put("memberInfo", memberInfo);
         return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), resultData);
     }
+
+    public MemberResponse successEditMemberProfile(MemberProfile memberProfile) {
+        MemberConstant responseCode = MemberConstant.SUCCESS_GET_MEMBER_PAGE;
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("memberProfile", memberProfile);
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), resultData);
+    }
 }

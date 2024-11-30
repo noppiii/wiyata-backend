@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -111,5 +112,14 @@ public class MemberServiceImpl implements MemberService {
         member.getMemberInfo().setGender(memberUpdateRequest.getGender());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse.successEditMemberInfo(member.getMemberProfile(), member.getMemberInfo()));
+    }
+
+    @Override
+    public ResponseEntity<MemberResponse> updateComment(Map<String, String> bio, HttpServletRequest request) {
+        Long id  = jwtTokenService.tokenToUserId(request);
+        Member member = memberRepository.findMemberId(id).orElseThrow(() -> new CustomException(ErrorConstant.UNAUTHORIZED));
+        member.getMemberProfile().setBio(bio.get("bio"));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse.successEditMemberProfile(member.getMemberProfile()));
     }
 }

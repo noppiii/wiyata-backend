@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 
 import java.io.FileNotFoundException;
+import java.util.Map;
 
 public interface MemberService {
 
@@ -20,4 +21,6 @@ public interface MemberService {
     ResponseEntity<MemberResponse> memberEditPage(HttpServletRequest request);
 
     ResponseEntity<MemberResponse> updateMember(MemberUpdateRequest memberUpdateRequest, HttpServletRequest request);
+
+    ResponseEntity<MemberResponse> updateComment(Map<String, String> bio, HttpServletRequest request);
 }
