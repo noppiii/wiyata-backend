@@ -82,4 +82,14 @@ public class MemberResponse {
         resultData.put("memberProfile", memberProfile);
         return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), resultData);
     }
+
+    public MemberResponse successEditMemberPassword() {
+        MemberConstant responseCode = MemberConstant.SUCCESS_EDIT_PASSWORD;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
+
+    public MemberResponse failEditMemberPassword() {
+        MemberConstant responseCode = MemberConstant.FAIL_EDIT_PASSWORD;
+        return new MemberResponse(responseCode.getStatus().value(), responseCode.getMessage(), null);
+    }
 }

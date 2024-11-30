@@ -6,6 +6,7 @@ import com.wiyata.wiyata.backend.entity.member.MemberInfo;
 import com.wiyata.wiyata.backend.entity.member.MemberProfile;
 import com.wiyata.wiyata.backend.exception.CustomException;
 import com.wiyata.wiyata.backend.payload.request.member.MemberUpdateRequest;
+import com.wiyata.wiyata.backend.payload.request.member.UpdatePasswordMemberRequest;
 import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
 import com.wiyata.wiyata.backend.repository.member.MemberRepository;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
@@ -19,12 +20,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -36,6 +39,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberResponse memberResponse;
     private final JwtTokenService jwtTokenService;
     private final FileService fileService;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -130,5 +134,20 @@ public class MemberServiceImpl implements MemberService {
         member.getMemberProfile().setNickname(nickName);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse.successEditMemberProfile(member.getMemberProfile()));
+    }
+
+    @Override
+    public ResponseEntity<MemberResponse> updateMemberPwd(HttpServletRequest request, UpdatePasswordMemberRequest updatePasswordMemberRequest) {
+        String userName =  jwtTokenService.tokenToUserName(request);
+        Optional<Member> member = memberRepository.findByUserName(userName);
+        String origin = updatePasswordMemberRequest.getOriginPassword();
+
+        if (passwordEncoder.matches(origin, member.get().getPassword())) {
+            String newPassword = passwordEncoder.encode(updatePasswordMemberRequest.getNewPassword());
+            memberRepository.updateMemberPassword(newPassword, userName);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse.successEditMemberPassword());
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(memberResponse.failEditMemberPassword());
     }
 }

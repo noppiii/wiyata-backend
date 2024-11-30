@@ -1,6 +1,7 @@
 package com.wiyata.wiyata.backend.controller;
 
 import com.wiyata.wiyata.backend.payload.request.member.MemberUpdateRequest;
+import com.wiyata.wiyata.backend.payload.request.member.UpdatePasswordMemberRequest;
 import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
 import com.wiyata.wiyata.backend.service.global.FileService;
@@ -66,5 +67,10 @@ public class MemberController {
     @PostMapping("/profile/{nickname}")
     public ResponseEntity<MemberResponse> updateNickName(@PathVariable("nickname") String nickname, HttpServletRequest request) {
         return memberService.updateNickName(nickname, request);
+    }
+
+    @PostMapping("/profile/password")
+    public ResponseEntity<MemberResponse> updateMemberPwd(HttpServletRequest request, @RequestBody UpdatePasswordMemberRequest updatePasswordMemberRequest) {
+        return memberService.updateMemberPwd(request, updatePasswordMemberRequest);
     }
 }

@@ -1,6 +1,7 @@
 package com.wiyata.wiyata.backend.service.member;
 
 import com.wiyata.wiyata.backend.payload.request.member.MemberUpdateRequest;
+import com.wiyata.wiyata.backend.payload.request.member.UpdatePasswordMemberRequest;
 import com.wiyata.wiyata.backend.payload.response.member.MemberResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
@@ -25,4 +26,6 @@ public interface MemberService {
     ResponseEntity<MemberResponse> updateComment(Map<String, String> bio, HttpServletRequest request);
 
     ResponseEntity<MemberResponse> updateNickName(String nickName, HttpServletRequest request);
+
+    ResponseEntity<MemberResponse> updateMemberPwd(HttpServletRequest request, UpdatePasswordMemberRequest updatePasswordMemberRequest);
 }
