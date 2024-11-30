@@ -62,4 +62,9 @@ public class MemberController {
     public ResponseEntity<MemberResponse> updateComment(@RequestBody Map<String, String> bio, HttpServletRequest request) {
         return memberService.updateComment(bio, request);
     }
+
+    @PostMapping("/profile/{nickname}")
+    public ResponseEntity<MemberResponse> updateNickName(@PathVariable("nickname") String nickname, HttpServletRequest request) {
+        return memberService.updateNickName(nickname, request);
+    }
 }

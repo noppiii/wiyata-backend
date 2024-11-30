@@ -23,4 +23,6 @@ public interface MemberService {
     ResponseEntity<MemberResponse> updateMember(MemberUpdateRequest memberUpdateRequest, HttpServletRequest request);
 
     ResponseEntity<MemberResponse> updateComment(Map<String, String> bio, HttpServletRequest request);
+
+    ResponseEntity<MemberResponse> updateNickName(String nickName, HttpServletRequest request);
 }

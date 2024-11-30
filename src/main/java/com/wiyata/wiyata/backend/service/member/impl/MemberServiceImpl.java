@@ -122,4 +122,13 @@ public class MemberServiceImpl implements MemberService {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse.successEditMemberProfile(member.getMemberProfile()));
     }
+
+    @Override
+    public ResponseEntity<MemberResponse> updateNickName(String nickName, HttpServletRequest request) {
+        Long id = jwtTokenService.tokenToUserId(request);
+        Member member = memberRepository.findMemberId(id).orElseThrow(() -> new CustomException(ErrorConstant.UNAUTHORIZED));
+        member.getMemberProfile().setNickname(nickName);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(memberResponse.successEditMemberProfile(member.getMemberProfile()));
+    }
 }
