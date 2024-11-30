@@ -2,6 +2,7 @@ package com.wiyata.wiyata.backend.entity.location;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wiyata.wiyata.backend.entity.enumerated.LocationType;
+import com.wiyata.wiyata.backend.payload.response.MarkLocationResponse;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -52,5 +53,14 @@ public class Location {
 
     public String changeName(String name) {
         return this.name = name;
+    }
+
+    public MarkLocationResponse toMarkLocationResponse() {
+        return MarkLocationResponse.builder()
+                .locationId(id)
+                .name(name)
+                .coords(coords)
+                .type(type)
+                .build();
     }
 }
