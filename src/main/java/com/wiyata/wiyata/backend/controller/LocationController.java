@@ -4,6 +4,7 @@ import com.querydsl.core.util.StringUtils;
 import com.wiyata.wiyata.backend.entity.enumerated.LocationType;
 import com.wiyata.wiyata.backend.payload.response.MarkAndBlockLocationResponse;
 import com.wiyata.wiyata.backend.payload.response.MarkLocationResponse;
+import com.wiyata.wiyata.backend.payload.response.location.BlockLocationResponse;
 import com.wiyata.wiyata.backend.payload.response.location.TypeLocationResponse;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
 import com.wiyata.wiyata.backend.service.location.LocationService;
@@ -37,5 +38,10 @@ public class LocationController {
     public ResponseEntity<MarkAndBlockLocationResponse> viewMemberLocations(HttpServletRequest request) {
         Long memberId = jwtTokenService.tokenToUserId(request);
         return ResponseEntity.ok().body(locationService.getMemberLocationList(memberId));
+    }
+
+    @GetMapping("/block")
+    public ResponseEntity<Map<String, List<BlockLocationResponse>>> viewBlockLocationList() {
+        return ResponseEntity.ok().body(locationService.getBlockLocationList());
     }
 }

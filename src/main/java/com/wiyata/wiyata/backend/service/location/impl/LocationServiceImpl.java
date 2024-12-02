@@ -61,6 +61,12 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    public Map<String, List<BlockLocationResponse>> getBlockLocationList() {
+        List<Location> locationList = locationRepository.findAllByIsMemberFalse();
+        return getBlockLocationListFromLocationList(locationList);
+    }
+
+    @Override
     public List<MarkLocationResponse> toMarkLocationResponseList(List<Location> locationList) {
         return locationList.stream().map(Location::toMarkLocationResponse).collect(Collectors.toList());
     }

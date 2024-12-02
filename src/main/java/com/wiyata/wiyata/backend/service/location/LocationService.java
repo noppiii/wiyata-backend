@@ -19,6 +19,8 @@ public interface LocationService {
 
     Map<String, List<MarkLocationResponse>> getMarkLocationListFromLocationList(List<Location> locationList);
 
+    Map<String, List<BlockLocationResponse>> getBlockLocationList();
+
     List<MarkLocationResponse> toMarkLocationResponseList(List<Location> locationList);
 
     Map<String, List<MarkLocationResponse>> classifyMarkLocationResponseList(List<MarkLocationResponse> markLocationResponseList);
