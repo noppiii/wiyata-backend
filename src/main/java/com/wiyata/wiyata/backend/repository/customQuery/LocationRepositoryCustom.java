@@ -2,6 +2,7 @@ package com.wiyata.wiyata.backend.repository.customQuery;
 
 
 import com.wiyata.wiyata.backend.entity.location.Location;
+import com.wiyata.wiyata.backend.entity.location.type.*;
 import com.wiyata.wiyata.backend.payload.response.RestaurantResponse;
 import com.wiyata.wiyata.backend.payload.response.location.*;
 
@@ -34,4 +35,16 @@ public interface LocationRepositoryCustom {
     List<LodgeResponse> findLodgesByLocationIds(List<Long> locationIds);
 
     List<RestaurantResponse> findRestaurantsByLocationIds(List<Long> locationIds);
+
+    Long saveAttraction(Attraction attraction);
+
+    Long saveCulture(Culture culture);
+
+    Long saveLeports(Leports leports);
+
+    Long saveLodge(Lodge lodge);
+
+    Long saveFestival(Festival festival);
+
+    Long saveRestaurant(Restaurant restaurant);
 }

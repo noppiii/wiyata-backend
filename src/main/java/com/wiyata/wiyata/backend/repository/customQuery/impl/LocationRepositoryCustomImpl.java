@@ -268,4 +268,171 @@ public class LocationRepositoryCustomImpl implements LocationRepositoryCustom {
                 .where(restaurant.locationId.in(locationIds))
                 .fetch();
     }
+
+    @Override
+    public Long saveAttraction(Attraction attraction) {
+        QAttraction qAttraction = QAttraction.attraction;
+
+        long attractionId = jpaQueryFactory.insert(qAttraction)
+                .columns(
+                        qAttraction.locationId,
+                        qAttraction.parking,
+                        qAttraction.restDate,
+                        qAttraction.useTime
+                )
+                .values(
+                        attraction.getLocationId(),
+                        attraction.isParking(),
+                        attraction.getRestDate(),
+                        attraction.getUseTime()
+                )
+                .execute();
+
+        return attractionId;
+    }
+
+    @Override
+    public Long saveCulture(Culture culture) {
+        QCulture qCulture = QCulture.culture;
+
+        long cultureId = jpaQueryFactory.insert(qCulture)
+                .columns(
+                        qCulture.locationId,
+                        qCulture.parking,
+                        qCulture.restDate,
+                        qCulture.fee,
+                        qCulture.useTime,
+                        qCulture.spendTime
+                )
+                .values(
+                        culture.getLocationId(),
+                        culture.isParking(),
+                        culture.getRestDate(),
+                        culture.getFee(),
+                        culture.getUseTime(),
+                        culture.getSpendTime()
+                )
+                .execute();
+
+        return cultureId;
+    }
+
+    @Override
+    public Long saveLeports(Leports leports) {
+        QLeports qLeports = QLeports.leports;
+
+        long leportsId = jpaQueryFactory.insert(qLeports)
+                .columns(
+                        qLeports.locationId,
+                        qLeports.openPeriod,
+                        qLeports.parking,
+                        qLeports.reservation,
+                        qLeports.restDate,
+                        qLeports.fee,
+                        qLeports.useTime
+                )
+                .values(
+                        leports.getLocationId(),
+                        leports.getOpenPeriod(),
+                        leports.isParking(),
+                        leports.getReservation(),
+                        leports.getRestDate(),
+                        leports.getFee(),
+                        leports.getUseTime()
+                )
+                .execute();
+
+        return leportsId;
+    }
+
+    @Override
+    public Long saveLodge(Lodge lodge) {
+        QLodge qLodge = QLodge.lodge;
+
+        long lodgeId = jpaQueryFactory.insert(qLodge)
+                .columns(
+                        qLodge.locationId,
+                        qLodge.checkInTime,
+                        qLodge.checkOutTime,
+                        qLodge.cooking,
+                        qLodge.parking,
+                        qLodge.numOfRooms,
+                        qLodge.reservationUrl,
+                        qLodge.subFacility
+                )
+                .values(
+                        lodge.getLocationId(),
+                        lodge.getCheckInTime(),
+                        lodge.getCheckOutTime(),
+                        lodge.isCooking(),
+                        lodge.isParking(),
+                        lodge.getNumOfRooms(),
+                        lodge.getReservationUrl(),
+                        lodge.getSubFacility()
+                )
+                .execute();
+
+        return lodgeId;
+    }
+
+    @Override
+    public Long saveFestival(Festival festival) {
+        QFestival qFestival = QFestival.festival;
+
+        long festivalId = jpaQueryFactory.insert(qFestival)
+                .columns(
+                        qFestival.locationId,
+                        qFestival.endDate,
+                        qFestival.homepage,
+                        qFestival.place,
+                        qFestival.startDate,
+                        qFestival.placeInfo,
+                        qFestival.playTime,
+                        qFestival.program,
+                        qFestival.fee
+                )
+                .values(
+                        festival.getLocationId(),
+                        festival.getEndDate(),
+                        festival.getHomepage(),
+                        festival.getPlace(),
+                        festival.getStartDate(),
+                        festival.getPlaceInfo(),
+                        festival.getPlayTime(),
+                        festival.getProgram(),
+                        festival.getFee()
+                )
+                .execute();
+
+        return festivalId;
+    }
+
+    @Override
+    public Long saveRestaurant(Restaurant restaurant) {
+        QRestaurant qRestaurant = QRestaurant.restaurant;
+
+        long restaurantId = jpaQueryFactory.insert(qRestaurant)
+                .columns(
+                        qRestaurant.locationId,
+                        qRestaurant.popularMenu,
+                        qRestaurant.openTime,
+                        qRestaurant.packing,
+                        qRestaurant.parking,
+                        qRestaurant.restDate,
+                        qRestaurant.menu
+                )
+                .values(
+                        restaurant.getLocationId(),
+                        restaurant.getPopularMenu(),
+                        restaurant.getOpenTime(),
+                        restaurant.isPacking(),
+                        restaurant.isParking(),
+                        restaurant.getRestDate(),
+                        restaurant.getMenu()
+                )
+                .execute();
+
+        return restaurantId;
+    }
+
 }

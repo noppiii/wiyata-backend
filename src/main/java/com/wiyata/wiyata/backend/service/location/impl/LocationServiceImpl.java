@@ -3,13 +3,21 @@ package com.wiyata.wiyata.backend.service.location.impl;
 import com.wiyata.wiyata.backend.constant.ErrorConstant;
 import com.wiyata.wiyata.backend.entity.enumerated.LocationType;
 import com.wiyata.wiyata.backend.entity.location.Location;
+import com.wiyata.wiyata.backend.entity.location.type.*;
 import com.wiyata.wiyata.backend.exception.CustomException;
+import com.wiyata.wiyata.backend.payload.request.location.InformationRequest;
+import com.wiyata.wiyata.backend.payload.request.location.LocationWrapperRequest;
+import com.wiyata.wiyata.backend.payload.request.location.MemberLocationRequest;
+import com.wiyata.wiyata.backend.payload.request.location.TypeLocationRequest;
 import com.wiyata.wiyata.backend.payload.response.MarkAndBlockLocationResponse;
 import com.wiyata.wiyata.backend.payload.response.MarkLocationResponse;
 import com.wiyata.wiyata.backend.payload.response.location.BlockLocationResponse;
 import com.wiyata.wiyata.backend.payload.response.location.TypeLocationResponse;
+import com.wiyata.wiyata.backend.repository.InformationRepository;
 import com.wiyata.wiyata.backend.repository.LocationRepository;
+import com.wiyata.wiyata.backend.repository.MemberLocationRepository;
 import com.wiyata.wiyata.backend.service.location.LocationService;
+import com.wiyata.wiyata.backend.service.location.mapper.TypeLocationMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,6 +36,9 @@ import java.util.stream.Collectors;
 public class LocationServiceImpl implements LocationService {
 
     private final LocationRepository locationRepository;
+    private final InformationRepository informationRepository;
+    private final MemberLocationRepository memberLocationRepository;
+    private final TypeLocationMapper typeLocationMapper;
 
     @Override
     public TypeLocationResponse getLocationDetails(Long locationId, LocationType locationType) throws NoSuchElementException {
@@ -46,6 +57,22 @@ public class LocationServiceImpl implements LocationService {
                 return locationRepository.findRestaurantByLocationId(locationId);
         }
         throw new NoSuchElementException("Lokasi tersebut tidak ditemukan");
+    }
+
+    @Override
+    public Long createLocationByMember(LocationWrapperRequest wrapperRequest) {
+        Location location = locationRepository.save(wrapperRequest.getLocation().toEntity());
+        Long locationId = location.getId();
+        LocationType type = location.getType();
+
+        TypeLocationRequest typeLocationRequestDto = wrapperRequest.getTypeLocation();
+        typeLocationRequestDto.setLocationId(locationId);
+
+        updateLocationInformation(wrapperRequest.getInformation(), locationId);
+        updateMemberLocation(wrapperRequest.getMemberLocation(), locationId);
+        saveTypeLocation(typeLocationRequestDto, type);
+
+        return locationId;
     }
 
     @Override
@@ -113,5 +140,48 @@ public class LocationServiceImpl implements LocationService {
     public Map<String, List<BlockLocationResponse>> classifyBlockLocationListWithType(List<BlockLocationResponse> blockLocationResponseList) {
         return blockLocationResponseList.stream().collect(Collectors
                 .groupingBy(blockLocationResponse -> blockLocationResponse.getType().getType()));
+    }
+
+    @Override
+    @Transactional
+    public boolean updateLocationInformation(InformationRequest informationRequest, Long locationId) {
+        return informationRepository.save(informationRequest.toEntity(locationId)).getLocationId().equals(locationId);
+    }
+
+    @Override
+    @Transactional
+    public boolean updateMemberLocation(MemberLocationRequest memberLocationRequest, Long locationId) {
+        return memberLocationRepository.save(memberLocationRequest.toEntity(locationId)).getLocationId().equals(locationId);
+    }
+
+    @Override
+    public boolean saveTypeLocation(TypeLocationRequest typeLocationRequest, LocationType locationType) throws NoSuchElementException {
+        switch (locationType) {
+            case ATTRACTION:
+                Attraction attraction = typeLocationMapper.getAttractionMapper().toEntity(typeLocationRequest);
+                locationRepository.saveAttraction(attraction);
+                return true;
+            case CULTURE:
+                Culture culture = typeLocationMapper.getCultureMapper().toEntity(typeLocationRequest);
+                locationRepository.saveCulture(culture);
+                return true;
+            case FESTIVAL:
+                Festival festival = typeLocationMapper.getFestivalMapper().toEntity(typeLocationRequest);
+                locationRepository.saveFestival(festival);
+                return true;
+            case LEPORTS:
+                Leports leports = typeLocationMapper.getLeportsMapper().toEntity(typeLocationRequest);
+                locationRepository.saveLeports(leports);
+                return true;
+            case LODGE:
+                Lodge lodge = typeLocationMapper.getLodgeMapper().toEntity(typeLocationRequest);
+                locationRepository.saveLodge(lodge);
+                return true;
+            case RESTAURANT:
+                Restaurant restaurant = typeLocationMapper.getRestaurantMapper().toEntity(typeLocationRequest);
+                locationRepository.saveRestaurant(restaurant);
+                return true;
+        }
+        throw new NoSuchElementException("Jenis ini tidak dapat digunakan");
     }
 }
