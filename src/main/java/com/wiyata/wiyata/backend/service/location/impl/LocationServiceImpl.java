@@ -3,6 +3,7 @@ package com.wiyata.wiyata.backend.service.location.impl;
 import com.wiyata.wiyata.backend.constant.ErrorConstant;
 import com.wiyata.wiyata.backend.entity.enumerated.LocationType;
 import com.wiyata.wiyata.backend.entity.location.Location;
+import com.wiyata.wiyata.backend.entity.location.MemberLocation;
 import com.wiyata.wiyata.backend.entity.location.type.*;
 import com.wiyata.wiyata.backend.exception.CustomException;
 import com.wiyata.wiyata.backend.payload.request.location.InformationRequest;
@@ -183,5 +184,20 @@ public class LocationServiceImpl implements LocationService {
                 return true;
         }
         throw new NoSuchElementException("Jenis ini tidak dapat digunakan");
+    }
+
+    @Override
+    public boolean deleteLocationByMember(Long locationId, Long memberId) {
+        MemberLocation memberLocation = memberLocationRepository.findByLocationId(locationId).orElseThrow();
+        if (verifyLocationOwnership(memberId, memberLocation)) {
+            memberLocationRepository.deleteMemberLocationByLocationId(locationId);
+            return !memberLocationRepository.existsMemberLocationByLocationId(locationId);
+        }
+        throw new NoSuchElementException("Tidak dapat menghapus lokasi");
+    }
+
+    @Override
+    public boolean verifyLocationOwnership(Long memberId, MemberLocation memberLocation) {
+        return memberLocation.getMemberId().equals(memberId);
     }
 }

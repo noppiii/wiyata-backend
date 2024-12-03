@@ -2,6 +2,7 @@ package com.wiyata.wiyata.backend.service.location;
 
 import com.wiyata.wiyata.backend.entity.enumerated.LocationType;
 import com.wiyata.wiyata.backend.entity.location.Location;
+import com.wiyata.wiyata.backend.entity.location.MemberLocation;
 import com.wiyata.wiyata.backend.payload.request.location.InformationRequest;
 import com.wiyata.wiyata.backend.payload.request.location.LocationWrapperRequest;
 import com.wiyata.wiyata.backend.payload.request.location.MemberLocationRequest;
@@ -47,4 +48,8 @@ public interface LocationService {
     boolean updateMemberLocation(MemberLocationRequest memberLocationRequest, Long locationId);
 
     boolean saveTypeLocation(TypeLocationRequest typeLocationRequest, LocationType locationType) throws NoSuchElementException;
+
+    boolean deleteLocationByMember(Long locationId, Long memberId);
+
+    boolean verifyLocationOwnership(Long memberId, MemberLocation memberLocation);
 }

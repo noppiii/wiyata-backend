@@ -53,4 +53,10 @@ public class LocationController {
         wrapperRequest.getMemberLocation().setMemberId(memberId);
         return new ResponseEntity<Long>(locationService.createLocationByMember(wrapperRequest), HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/member/{locationId}")
+    public ResponseEntity<String> memberLocationRemove(@PathVariable("locationId") Long locationId, HttpServletRequest request) {
+        Long memberId = jwtTokenService.tokenToUserId(request);
+        return locationService.deleteLocationByMember(locationId, memberId) ? ResponseEntity.noContent().build() : ResponseEntity.badRequest().build();
+    }
 }
