@@ -4,6 +4,7 @@ import com.wiyata.wiyata.backend.entity.BaseTimeEntity;
 import com.wiyata.wiyata.backend.entity.enumerated.PlanComplete;
 import com.wiyata.wiyata.backend.entity.enumerated.PlanStatus;
 import com.wiyata.wiyata.backend.entity.member.Member;
+import com.wiyata.wiyata.backend.payload.request.plan.PlanRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -51,4 +52,13 @@ public class Plan extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private PlanComplete planComplete;
+
+    public PlanRequest toRequest() {
+        return PlanRequest.builder()
+                .planId(id)
+                .depart(depart)
+                .name(name)
+                .periods(periods)
+                .build();
+    }
 }

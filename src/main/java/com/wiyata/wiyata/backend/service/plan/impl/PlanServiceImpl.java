@@ -3,9 +3,11 @@ package com.wiyata.wiyata.backend.service.plan.impl;
 import com.wiyata.wiyata.backend.entity.member.Member;
 import com.wiyata.wiyata.backend.entity.plan.Plan;
 import com.wiyata.wiyata.backend.payload.request.plan.CreatePlanRequest;
+import com.wiyata.wiyata.backend.payload.request.plan.PlanRequest;
 import com.wiyata.wiyata.backend.payload.response.plan.PlanResponse;
 import com.wiyata.wiyata.backend.repository.MemberRepository;
 import com.wiyata.wiyata.backend.repository.PlanRepository;
+import com.wiyata.wiyata.backend.security.jwt.JwtTokenProvider;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
 import com.wiyata.wiyata.backend.service.plan.PlanService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,19 +24,28 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PlanServiceImpl implements PlanService {
 
-    private final JwtTokenService jwtTokenService;
+    private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final PlanRepository planRepository;
     private final PlanResponse planResponse;
 
     @Override
-    public ResponseEntity<PlanResponse> createMemberPlan(CreatePlanRequest planRequest, Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("Member not found with ID: " + memberId));
-
+    public Plan createMemberPlan(CreatePlanRequest planRequest, Member member) {
         Plan plan = planRequest.getPlanForm().toEntity(member);
         Plan savedPlan = planRepository.save(plan);
 
-        return ResponseEntity.status(HttpStatus.OK).body(planResponse.successCreatePlan(savedPlan));
+        return savedPlan;
+    }
+
+    @Override
+    public PlanRequest getOnePlanRequest(Long planId, Member member) {
+        return planRepository.findPlanByMember(planId, member).orElseThrow().toRequest();
+    }
+
+    @Override
+    public Member getMemberFromPayload(HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveAccessToken(request);
+        String userName = jwtTokenProvider.getUserName(token);
+        return memberRepository.findByUserName(userName).orElseThrow(IllegalArgumentException::new);
     }
 }
