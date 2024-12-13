@@ -43,4 +43,11 @@ public class PlanConverter {
         private String message;
     }
 
+    @Data
+    @AllArgsConstructor
+    public static class UserDay<T> {
+        private int httpStatus;
+        private String message;
+        private T dayForm;
+    }
 }

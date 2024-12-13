@@ -8,4 +8,6 @@ import java.util.List;
 public interface DayService {
 
     List<Day> createDay(CreateDayRequest createDayRequest, Long planId);
+
+    List<Day> findDayIdForPlanIdToList(Long id);
 }

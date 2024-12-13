@@ -1,6 +1,7 @@
 package com.wiyata.wiyata.backend.entity.plan;
 
 import com.wiyata.wiyata.backend.entity.location.Location;
+import com.wiyata.wiyata.backend.payload.request.plan.DayRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,4 +31,13 @@ public class Day {
     private Integer days;
 
     private String copyLocationId;
+
+    public DayRequest toRequest() {
+        return DayRequest.builder()
+                .locationId(location.getId())
+                .copyLocationId(copyLocationId)
+                .movingData(movingData)
+                .days(days)
+                .build();
+    }
 }

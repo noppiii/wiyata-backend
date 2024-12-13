@@ -1,6 +1,7 @@
 package com.wiyata.wiyata.backend.controller;
 
 import com.wiyata.wiyata.backend.entity.member.Member;
+import com.wiyata.wiyata.backend.entity.plan.Day;
 import com.wiyata.wiyata.backend.payload.request.plan.*;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
 import com.wiyata.wiyata.backend.service.plan.ConceptService;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.wiyata.wiyata.backend.converter.PlanConverter.*;
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @RestController
@@ -91,6 +93,22 @@ public class PlanController {
             String message = "Hari berhasil dibuat.";
 
             return new CreateDay(HTTPStatus.Created.getCode(), message);
+        }
+    }
+
+    @GetMapping("/members/plan/{planId}/day")
+    public UserDay getDaysInPlan(@PathVariable("planId") Long planId, HttpServletRequest request) {
+        Member memberFromPayload = planService.getMemberFromPayload(request);
+        String message = "Hari berhasil dimuat.";
+
+        if (memberFromPayload.getId() != null) {
+            List<Day> dayList = dayService.findDayIdForPlanIdToList(planId);
+            List<DayRequest> dayDtos = dayList.stream().map(Day::toRequest).collect(toList());
+            return new UserDay(HTTPStatus.OK.getCode(), message, dayDtos);
+        } else {
+            String errorMessage = "Anda adalah anggota yang tidak terdaftar.";
+
+            return new UserDay(HTTPStatus.Unauthorized.getCode(), errorMessage, null);
         }
     }
 }

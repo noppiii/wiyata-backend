@@ -61,4 +61,10 @@ public class DayServiceImpl implements DayService {
 
         return dayRepository.saveAll(dayList);
     }
+
+    @Override
+    public List<Day> findDayIdForPlanIdToList(Long id) {
+        Plan plan = planRepository.findPlanById(id).orElseThrow();
+        return dayRepository.findDaysByPlan(plan);
+    }
 }
