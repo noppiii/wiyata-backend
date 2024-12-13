@@ -111,4 +111,18 @@ public class PlanController {
             return new UserDay(HTTPStatus.Unauthorized.getCode(), errorMessage, null);
         }
     }
+
+    @PutMapping("/members/plan/{planId}/day")
+    public GetDay updateUserPlanDay(@PathVariable("planId") Long planId, HttpServletRequest request, @RequestBody CreateDayRequest createDayRequest) {
+        Member member = planService.getMemberFromPayload(request);
+
+        if (member.getId() == null) {
+            String errorMessage = "Anda adalah anggota yang tidak terdaftar.";
+            return new GetDay(HTTPStatus.Unauthorized.getCode(), errorMessage);
+        } else {
+            dayService.updateDay(planId, createDayRequest);
+            String message = "Hari telah berhasil diubah.";
+            return new GetDay(HTTPStatus.Created.getCode(), message);
+        }
+    }
 }

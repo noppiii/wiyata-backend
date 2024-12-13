@@ -6,6 +6,7 @@ import com.wiyata.wiyata.backend.entity.plan.Day;
 import com.wiyata.wiyata.backend.entity.plan.Plan;
 import com.wiyata.wiyata.backend.payload.request.plan.CreateDayRequest;
 import com.wiyata.wiyata.backend.payload.request.plan.DayFormRequest;
+import com.wiyata.wiyata.backend.payload.request.plan.UpdatePlanDayRequest;
 import com.wiyata.wiyata.backend.repository.DayRepository;
 import com.wiyata.wiyata.backend.repository.LocationRepository;
 import com.wiyata.wiyata.backend.repository.PlanRepository;
@@ -66,5 +67,20 @@ public class DayServiceImpl implements DayService {
     public List<Day> findDayIdForPlanIdToList(Long id) {
         Plan plan = planRepository.findPlanById(id).orElseThrow();
         return dayRepository.findDaysByPlan(plan);
+    }
+
+    @Override
+    public List<Day> updateDay(Long id, CreateDayRequest createDayRequest) {
+        Plan plan = planRepository.findPlanById(id).orElseThrow();
+        removeDay(plan);
+        planService.unFinishedPlan(id);
+        return createDay(createDayRequest, plan.getId());
+    }
+
+    @Override
+    public void removeDay(Plan plan) {
+        List<Day> dayList = dayRepository.findDaysByPlan(plan);
+        if (!dayList.isEmpty())
+            dayList.forEach(dayRepository::delete);
     }
 }

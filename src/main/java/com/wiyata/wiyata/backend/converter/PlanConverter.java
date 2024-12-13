@@ -50,4 +50,12 @@ public class PlanConverter {
         private String message;
         private T dayForm;
     }
+
+    @Data
+    @AllArgsConstructor
+    public static class GetDay<T> {
+        private int httpStatus;
+        private String message;
+    }
+
 }
