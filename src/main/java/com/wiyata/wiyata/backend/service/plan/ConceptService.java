@@ -14,4 +14,6 @@ public interface ConceptService {
     void removeConcept(Plan plan);
 
     List<Concept> updateConcept(Long planId, CreateConceptRequest createConceptRequest);
+
+    List<String> findConceptIdForPlanIdToList(Long planId);
 }

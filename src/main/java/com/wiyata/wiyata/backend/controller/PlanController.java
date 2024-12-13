@@ -11,7 +11,12 @@ import com.wiyata.wiyata.backend.service.plan.PlanService;
 import com.wiyata.wiyata.backend.util.HTTPStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.wiyata.wiyata.backend.converter.PlanConverter.*;
 
@@ -48,20 +53,30 @@ public class PlanController {
 
     @PostMapping("/members/plan/{planId}/concept")
     public UpdateConcept updateUserPlanConcept(@PathVariable("planId") Long planId, HttpServletRequest request, @RequestBody CreateConceptRequest createConceptRequest) {
-
         Member member = planService.getMemberFromPayload(request);
 
         if (member.getId() == null) {
-            String errorMessage = "등록되지 않은 회원입니다.";
-
+            String errorMessage = "Anda adalah anggota yang tidak terdaftar.";
             return new UpdateConcept(HTTPStatus.Unauthorized.getCode(), errorMessage);
-
         } else {
             conceptService.updateConcept(planId, createConceptRequest);
-
             String message = "Konsep telah berhasil dibuat dan diperbarui.";
-
             return new UpdateConcept(HTTPStatus.Created.getCode(), message);
+        }
+    }
+
+    @GetMapping("/members/plan/{planId}/concept")
+    public ResponseEntity<?> usersConcepts(@PathVariable("planId") Long planId, HttpServletRequest request) {
+        Member memberFromPayload = planService.getMemberFromPayload(request);
+
+        if (memberFromPayload.getId() != null) {
+            List<String> conceptIdForPlanIdToList = conceptService.findConceptIdForPlanIdToList(planId);
+            Map<String, Object> conceptResult = new HashMap<>();
+            conceptResult.put("conceptForm", conceptIdForPlanIdToList);
+            conceptResult.put("planId", planId);
+            return ResponseEntity.ok().body(conceptResult);
+        } else {
+            throw new IllegalStateException("Anda bukan anggota terdaftar.");
         }
     }
 }

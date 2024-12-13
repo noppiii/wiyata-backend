@@ -59,4 +59,9 @@ public class ConceptServiceImpl implements ConceptService {
         }
         return createConcept(createConceptRequest, plan.getId());
     }
+
+    @Override
+    public List<String> findConceptIdForPlanIdToList(Long planId) {
+        return conceptRepository.findConceptNameByPlanId(planId);
+    }
 }
