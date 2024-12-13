@@ -48,4 +48,16 @@ public class PlanServiceImpl implements PlanService {
         String userName = jwtTokenProvider.getUserName(token);
         return memberRepository.findByUserName(userName).orElseThrow(IllegalArgumentException::new);
     }
+
+    @Override
+    public void finishedPlan(Long planId) {
+        Plan plan = planRepository.findPlanById(planId).orElseThrow();
+        plan.finished();
+    }
+
+    @Override
+    public void unFinishedPlan(Long planId) {
+        Plan plan = planRepository.findPlanById(planId).orElseThrow();
+        plan.unFinished();
+    }
 }

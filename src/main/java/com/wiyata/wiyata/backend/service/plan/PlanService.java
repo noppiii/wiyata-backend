@@ -10,8 +10,16 @@ import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 
 public interface PlanService {
+
     Plan createMemberPlan(CreatePlanRequest planRequest, Member member);
+
     PlanRequest getOnePlanRequest(Long planId, Member member);
+
     Member getMemberFromPayload(HttpServletRequest request);
+
+    void finishedPlan(Long planId);
+
+    void unFinishedPlan(Long planId);
+
 }
 

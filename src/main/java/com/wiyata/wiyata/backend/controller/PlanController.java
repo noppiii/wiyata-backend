@@ -1,12 +1,10 @@
 package com.wiyata.wiyata.backend.controller;
 
 import com.wiyata.wiyata.backend.entity.member.Member;
-import com.wiyata.wiyata.backend.payload.request.plan.CreateConceptRequest;
-import com.wiyata.wiyata.backend.payload.request.plan.CreatePlanRequest;
-import com.wiyata.wiyata.backend.payload.request.plan.PlanRequest;
-import com.wiyata.wiyata.backend.payload.request.plan.UpdateConceptRequest;
+import com.wiyata.wiyata.backend.payload.request.plan.*;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
 import com.wiyata.wiyata.backend.service.plan.ConceptService;
+import com.wiyata.wiyata.backend.service.plan.DayService;
 import com.wiyata.wiyata.backend.service.plan.PlanService;
 import com.wiyata.wiyata.backend.util.HTTPStatus;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +25,7 @@ public class PlanController {
 
     private final PlanService planService;
     private final ConceptService conceptService;
+    private final DayService dayService;
 
     @PostMapping("/members/plan")
     public CreatePlan createPlan(@RequestBody CreatePlanRequest createPlanRequest, HttpServletRequest request) {
@@ -77,6 +76,21 @@ public class PlanController {
             return ResponseEntity.ok().body(conceptResult);
         } else {
             throw new IllegalStateException("Anda bukan anggota terdaftar.");
+        }
+    }
+
+    @PostMapping("/members/plan/{planId}/day")
+    public CreateDay createDay(@RequestBody CreateDayRequest createDayRequest, HttpServletRequest request, @PathVariable("planId") Long planId) {
+        Member member = planService.getMemberFromPayload(request);
+        if (member.getId() == null) {
+            String errorMessage = "Anda adalah anggota yang tidak terdaftar.";
+            return new CreateDay(HTTPStatus.Unauthorized.getCode(), errorMessage);
+        } else {
+            dayService.createDay(createDayRequest, planId);
+
+            String message = "Hari berhasil dibuat.";
+
+            return new CreateDay(HTTPStatus.Created.getCode(), message);
         }
     }
 }

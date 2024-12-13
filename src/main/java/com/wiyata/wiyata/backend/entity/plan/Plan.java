@@ -61,4 +61,17 @@ public class Plan extends BaseTimeEntity {
                 .periods(periods)
                 .build();
     }
+
+    public void finished() {
+        if (getPlanComplete() == PlanComplete.FINISHED) {
+            throw new IllegalStateException("Ini adalah rencana yang telah selesai.");
+        }
+
+        this.planComplete = PlanComplete.FINISHED;
+    }
+
+
+    public void unFinished() {
+        this.planComplete = PlanComplete.UNFINISHED;
+    }
 }
