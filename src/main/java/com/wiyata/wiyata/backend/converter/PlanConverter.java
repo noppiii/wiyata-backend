@@ -28,4 +28,11 @@ public class PlanConverter {
         private String message;
         private T planForm;
     }
+
+    @Data
+    @AllArgsConstructor
+    public static class UpdateConcept<T> {
+        private int httpStatus;
+        private String message;
+    }
 }

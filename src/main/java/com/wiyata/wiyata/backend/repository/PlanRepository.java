@@ -13,4 +13,7 @@ public interface PlanRepository extends JpaRepository<Plan, Long> {
     @Query("SELECT p FROM Plan p WHERE p.id = :planId AND p.member = :member")
     Optional<Plan> findPlanByMember(@Param("planId") Long planId, @Param("member") Member member);
 
+    @Query("SELECT p FROM Plan p WHERE p.id = :planId")
+    Optional<Plan> findPlanById(@Param("planId") Long planId);
+
 }
