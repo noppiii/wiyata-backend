@@ -2,11 +2,14 @@ package com.wiyata.wiyata.backend.controller;
 
 import com.wiyata.wiyata.backend.entity.member.Member;
 import com.wiyata.wiyata.backend.entity.plan.Day;
+import com.wiyata.wiyata.backend.entity.plan.Plan;
 import com.wiyata.wiyata.backend.payload.request.plan.*;
 import com.wiyata.wiyata.backend.security.jwt.JwtTokenService;
+import com.wiyata.wiyata.backend.service.location.LocationService;
 import com.wiyata.wiyata.backend.service.plan.ConceptService;
 import com.wiyata.wiyata.backend.service.plan.DayService;
 import com.wiyata.wiyata.backend.service.plan.PlanService;
+import com.wiyata.wiyata.backend.service.plan.SelectedLocationService;
 import com.wiyata.wiyata.backend.util.HTTPStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,8 @@ public class PlanController {
     private final PlanService planService;
     private final ConceptService conceptService;
     private final DayService dayService;
+    private final SelectedLocationService selectedLocationService;
+    private final LocationService locationService;
 
     @PostMapping("/members/plan")
     public CreatePlan createPlan(@RequestBody CreatePlanRequest createPlanRequest, HttpServletRequest request) {
@@ -125,4 +130,13 @@ public class PlanController {
             return new GetDay(HTTPStatus.Created.getCode(), message);
         }
     }
+
+    @GetMapping("/members/plan/{planId}/selected-location")
+    public ResponseEntity usersSelectedLocation(@PathVariable("planId") Long planId, HttpServletRequest request) {
+        Member member = planService.getMemberFromPayload(request);
+        Plan plan = planService.returnPlan(planId, member);
+        List<Long> locationIdList = selectedLocationService.findLocationIdList(plan);
+        return ResponseEntity.ok().body(locationService.getMarkAndBlockLocationsFromLocationIds(locationIdList));
+    }
+
 }

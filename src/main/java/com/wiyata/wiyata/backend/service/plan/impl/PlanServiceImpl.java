@@ -60,4 +60,9 @@ public class PlanServiceImpl implements PlanService {
         Plan plan = planRepository.findPlanById(planId).orElseThrow();
         plan.unFinished();
     }
+
+    @Override
+    public Plan returnPlan(Long planId, Member member) {
+        return planRepository.findPlanByMember(planId, member).orElseThrow();
+    }
 }

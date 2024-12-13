@@ -16,4 +16,7 @@ public interface LocationRepository extends JpaRepository<Location, Long>, Locat
 
     @Query("SELECT l FROM Location l WHERE l.id = :locationId")
     Optional<Location> findLocationById(@Param("locationId") Long locationId);
+
+    @Query("SELECT l FROM Location l WHERE l.id in :idList")
+    List<Location> findAllLocationByIdIn(@Param("idList") List<Long> locationIdList);
 }

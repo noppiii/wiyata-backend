@@ -21,5 +21,7 @@ public interface PlanService {
 
     void unFinishedPlan(Long planId);
 
+    Plan returnPlan(Long planId, Member member);
+
 }
 

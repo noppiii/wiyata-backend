@@ -10,6 +10,7 @@ import com.wiyata.wiyata.backend.payload.request.location.InformationRequest;
 import com.wiyata.wiyata.backend.payload.request.location.LocationWrapperRequest;
 import com.wiyata.wiyata.backend.payload.request.location.MemberLocationRequest;
 import com.wiyata.wiyata.backend.payload.request.location.TypeLocationRequest;
+import com.wiyata.wiyata.backend.payload.request.plan.MarkAndBlockLocationListRequest;
 import com.wiyata.wiyata.backend.payload.response.MarkAndBlockLocationResponse;
 import com.wiyata.wiyata.backend.payload.response.MarkLocationResponse;
 import com.wiyata.wiyata.backend.payload.response.location.BlockLocationResponse;
@@ -199,5 +200,16 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public boolean verifyLocationOwnership(Long memberId, MemberLocation memberLocation) {
         return memberLocation.getMemberId().equals(memberId);
+    }
+
+    @Override
+    public MarkAndBlockLocationListRequest getMarkAndBlockLocationsFromLocationIds(List<Long> locationIds) {
+        List<Location> locations = getLocationListWithLocationIds(locationIds);
+        return new MarkAndBlockLocationListRequest(getMarkLocationListFromLocationList(locations), getBlockLocationListFromLocationList(locations));
+    }
+
+    @Override
+    public List<Location> getLocationListWithLocationIds(List<Long> locationIds) {
+        return locationRepository.findAllLocationByIdIn(locationIds);
     }
 }
