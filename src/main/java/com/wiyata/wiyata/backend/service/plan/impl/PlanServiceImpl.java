@@ -4,6 +4,7 @@ import com.wiyata.wiyata.backend.entity.member.Member;
 import com.wiyata.wiyata.backend.entity.plan.Plan;
 import com.wiyata.wiyata.backend.payload.request.plan.CreatePlanRequest;
 import com.wiyata.wiyata.backend.payload.request.plan.PlanRequest;
+import com.wiyata.wiyata.backend.payload.request.plan.UserPlanUpdateRequest;
 import com.wiyata.wiyata.backend.payload.response.plan.PlanResponse;
 import com.wiyata.wiyata.backend.repository.MemberRepository;
 import com.wiyata.wiyata.backend.repository.PlanRepository;
@@ -64,5 +65,11 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public Plan returnPlan(Long planId, Member member) {
         return planRepository.findPlanByMember(planId, member).orElseThrow();
+    }
+
+    @Override
+    public void updateUserPlanContent(Long planId, Member member, UserPlanUpdateRequest userPlanUpdateRequest) {
+        Plan plan = planRepository.findPlanByMember(planId, member).orElseThrow();
+        plan.updatePlan(userPlanUpdateRequest);
     }
 }

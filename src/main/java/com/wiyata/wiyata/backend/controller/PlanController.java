@@ -139,4 +139,12 @@ public class PlanController {
         return ResponseEntity.ok().body(locationService.getMarkAndBlockLocationsFromLocationIds(locationIdList));
     }
 
+    @PostMapping("/members/plan/{planId}/update")
+    public UpdatePlan updateUserPlan(@PathVariable("planId") Long planId, HttpServletRequest request, @RequestBody UserPlanUpdateRequest userPlanUpdateRequest) {
+        Member member = planService.getMemberFromPayload(request);
+        planService.updateUserPlanContent(planId, member, userPlanUpdateRequest);
+        String message = "Rencananya telah berhasil diubah.";
+        return new UpdatePlan(HTTPStatus.Created.getCode(), message);
+    }
+
 }

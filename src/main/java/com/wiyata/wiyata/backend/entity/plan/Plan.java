@@ -5,6 +5,7 @@ import com.wiyata.wiyata.backend.entity.enumerated.PlanComplete;
 import com.wiyata.wiyata.backend.entity.enumerated.PlanStatus;
 import com.wiyata.wiyata.backend.entity.member.Member;
 import com.wiyata.wiyata.backend.payload.request.plan.PlanRequest;
+import com.wiyata.wiyata.backend.payload.request.plan.UserPlanUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -73,5 +74,12 @@ public class Plan extends BaseTimeEntity {
 
     public void unFinished() {
         this.planComplete = PlanComplete.UNFINISHED;
+    }
+
+    public void updatePlan(UserPlanUpdateRequest userPlanUpdateRequest) {
+        this.depart = userPlanUpdateRequest.getDepart();
+        this.name = userPlanUpdateRequest.getName();
+        this.periods = userPlanUpdateRequest.getPeriods();
+        this.thumbnail = userPlanUpdateRequest.getThumbnail();
     }
 }
