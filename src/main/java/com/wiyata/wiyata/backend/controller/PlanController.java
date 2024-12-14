@@ -147,4 +147,16 @@ public class PlanController {
         return new UpdatePlan(HTTPStatus.Created.getCode(), message);
     }
 
+    @PostMapping("/members/plan/{planId}/selected-location")
+    public UpdateSelectedLocation updateUserPlanSelectedLocation(@PathVariable("planId") Long planId, HttpServletRequest request, @RequestBody UpdateConceptRequest updateConceptRequest) {
+        Member member = planService.getMemberFromPayload(request);
+        if (member.getId() == null) {
+            String errorMessage = "Anda adalah anggota yang tidak terdaftar.";
+            return new UpdateSelectedLocation(HTTPStatus.Unauthorized.getCode(), errorMessage);
+        } else {
+            selectedLocationService.updateSelectedLocation(planId, updateConceptRequest);
+            String message = "SelectedLocation telah berhasil dibuat dan diperbarui..";
+            return new UpdateSelectedLocation(HTTPStatus.Created.getCode(), message);
+        }
+    }
 }
